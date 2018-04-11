@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <form action="" [formGroup]="form">
+    {{ form.value | json }}
+
+    <div formArrayName="equipamentos">
+      <div *ngFor="let equipamento of form.controls['equipamentos'].controls; index as i">
+        <div formGroupName="{{i}}">
+          <label>Modelo Equipamento</label>
+          <select formControlName="modelo">
+            <option [value]="equipamento.descricao" *ngFor="let equipamento of equipamentosMock">
+              {{ equipamento.descricao }}
+            </option>
+          </select>
+          <br>
+          <br>
+          <div formArrayName="items">
+
+            <div *ngFor="let item of equipamento.controls['items'].controls; index as idx">
+              <div formGroupName="{{idx}}">
+                <label>Items Equipamento</label>
+                <input type="text" formControlName="descricao">
+                <input type="text" formControlName="quantidade">
+              </div>
+            </div>
+
+          </div>
+          <button (click)="addItem(i)">+ Items</button>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <button (click)="addEquipamento()">+ Equipamento</button>
+  </form>
+
+</ion-content>
